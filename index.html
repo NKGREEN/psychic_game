@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+    <head>
+        <title> Word Guess Game</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    </head>
+    
+    <body>
+        
+        <div class="jumbotron">
+  <h1>Guess the Letter!</h1> 
+  
+</div>
+
+    <div class="wells">
+        <div class="card">
+            <h3>Wins</h3>
+            <span class="number" id="wins">&nbsp;</span>
+        </div class="card">
+
+        <div class="card">
+            <h3>Losses</h3>
+            <span class="number" id="losses">&nbsp;</span>
+        </div class="card">
+
+        <div class="card">
+            <h3>Guesses</h3>
+            <span class="number" id="guesses">&nbsp;</span>
+        </div class="card">
+    </div>
+    <div>
+        <div class="card">
+            <h3>Guesses</h3>
+            <span class="number" id="guessedLetters">&nbsp;</span>
+        </div class="card">
+    </div>
+</div>
+
+
+
+
+
+
+
+        
+        
+        <script> 
+        
+                //array of values for computer to choose from.
+        var alphabet=["a", "b", "c", "d", "e","f", "g", "h", "i", "j", "k", "l", "m", 
+                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
+        var computerGuess=alphabet[Math.floor(Math.random()*alphabet.length)];
+        console.log(computerGuess);
+        
+        // Global variables are set to track guessed letters, guesses left, wins, losses. 
+    var guessedLetters = [];
+    var guesses = 9;
+    var wins = 0;
+    var losses = 0;
+    var answer;
+    
+      //Display the starting score on the webpage
+document.getElementById("wins").innerHTML = wins;
+document.getElementById("losses").innerHTML = losses;
+document.getElementById("guesses").innerHTML = guesses;
+
+function computerGuess() {
+   // Computer randomly chooses a value from the array above.
+    answer = alphabet[Math.floor(Math.random() * alphabet.length)];
+    console.log(answer);
+    
+    return answer;
+}
+
+computerGuess();
+
+// sets functions for key strikes.
+document.onkeypress = function(event) {
+    var userGuess = event.key;
+
+    // if the key pressed is the same as the value.....
+    if (answer === userGuess) {
+
+        // Go up one number on the wins variable.                    
+        wins++;
+
+        //Display the new number of wins on page.
+        document.getElementById("wins").innerHTML = wins;
+
+        //Display winning message on screen.
+        document.getElementById("message").innerHTML = "<h2>You win! The letter was " + answer + ". <br /> Guess what letter I'm thinking of now.</h2>";
+        
+        // Generate random letter again. 
+        computerGuess();
+
+    }
+
+    // if the key pressed is NOT the same as the value.....
+    else {
+
+        // reduce value of remaining guesses by 1.
+        guesses--;
+
+        //Display the new number of guesses on page.
+        document.getElementById("guesses").innerHTML = guesses;
+        
+        // Store the guess into the guessedLetters array.
+        guessedLetters.push(userGuess);
+
+        //Displays guessedLetters on page.
+        document.getElementById("guessedLetters").innerHTML = guessedLetters;
+
+        //Display winning message on screen.
+        document.getElementById("message").innerHTML = "<h2>X<br /> Try Again.</h2>";
+
+    }
+    
+    
+    // When there are no remaining guesses, then increment on the losses variable.
+    if (guesses === 0) {
+
+        //reset the array
+        guessedLetters = [];
+
+        //reset the guess counter
+        guesses = 9;
+
+        // increments losses
+        losses++;
+
+        // displays the score
+        document.getElementById("losses").innerHTML = losses;
+
+        //Display winning message on screen.
+        document.getElementById("message").innerHTML = "<h2>The letter was " + answer + ". You lose! <br /> Guess what letter I'm thinking of now.</h2>";
+
+        // Generate random letter again
+        computerGuess();
+    }
+
+}  
+        
+        
+
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        
+        </script>
+
+    </body>
+</html>
